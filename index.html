@@ -9,13 +9,13 @@
 <style>
 
 :root{
- --bg1:#08152e;
- --bg2:#14305f;
+ --bg1:#34265f;
+ --bg2:#51428b;
  --gold:#ffd76a;
  --orange:#ff9d3f;
  --red:#ff6d43;
- --paper:rgba(255,248,230,.92);
- --text:#263248;
+ --paper:#fffaf0;
+ --text:#40345d;
 }
 
 *{
@@ -29,6 +29,8 @@ body{
  width:100%;
  height:100%;
  font-family:
+ "Trebuchet MS",
+ "Arial Rounded MT Bold",
  "Segoe UI",
  Arial,
  sans-serif;
@@ -39,8 +41,8 @@ body{
  background:
  radial-gradient(
   circle at top,
-  #234d8d 0%,
-  var(--bg2) 40%,
+  #7561ad 0%,
+  var(--bg2) 55%,
   var(--bg1) 100%);
  color:white;
 }
@@ -53,67 +55,24 @@ body{
  z-index:1;
 }
 
-.star{
- position:absolute;
- width:3px;
- height:3px;
- background:white;
- border-radius:50%;
- animation:twinkle 3s infinite alternate;
+#sky{
+ background-image:
+  radial-gradient(circle, #fff2bd 2px, transparent 3px),
+  radial-gradient(circle, #d9c9ff 1px, transparent 2px);
+ background-size:110px 130px, 71px 97px;
+ background-position:18px 30px, 48px 65px;
 }
 
-@keyframes twinkle{
- from{opacity:.2}
- to{opacity:1}
-}
-
-.lantern{
- position:absolute;
- width:44px;
- height:60px;
- border-radius:8px;
-
- background:
- linear-gradient(
- to bottom,
- #fff0ad,
- #ffc44c,
- #ff942b);
-
- box-shadow:
- 0 0 20px #ffd84e,
- 0 0 35px #ffb300;
-
- animation:
- lanternFloat linear infinite;
-}
-
-.lantern::before{
+#sky::after{
  content:"";
  position:absolute;
- width:20px;
- height:12px;
- left:10px;
- top:-10px;
-
- border:3px solid #ddd;
- border-bottom:none;
- border-radius:10px 10px 0 0;
-}
-
-@keyframes lanternFloat{
-
- from{
-  transform:
-   translateY(110vh)
-   rotate(-3deg);
- }
-
- to{
-  transform:
-   translateY(-150px)
-   rotate(3deg);
- }
+ bottom:-65px;
+ left:-10%;
+ width:120%;
+ height:160px;
+ border-radius:50% 50% 0 0;
+ background:#547878;
+ box-shadow:100px -18px 0 #668780;
 }
 
 .app{
@@ -121,24 +80,48 @@ body{
  z-index:2;
  height:100vh;
  height:100dvh;
- padding-bottom:env(safe-area-inset-bottom, 0px);
+ max-width:860px;
+ margin:0 auto;
+ padding:env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+  env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
  display:flex;
  flex-direction:column;
 }
 
 header{
  text-align:center;
- padding:18px 10px 10px;
+ padding:10px 12px 0;
 }
 
 header h1{
- font-size:
- clamp(1.5rem,5vw,2.2rem);
+ color:#fff1c8;
+ font-size:clamp(.85rem,3vw,1rem);
+ letter-spacing:.06em;
 }
 
 header p{
- opacity:.9;
- margin-top:4px;
+ margin-top:3px;
+ font-size:clamp(1.5rem,6vw,2.25rem);
+ font-weight:800;
+ text-shadow:0 3px 0 #403166;
+}
+
+.nightFriends{
+ display:block;
+ width:min(100%, 420px);
+ height:96px;
+ margin:0 auto;
+}
+
+.lanternFriend{
+ transform-box:fill-box;
+ transform-origin:top center;
+ animation:sway 5s ease-in-out infinite;
+}
+
+@keyframes sway{
+ 0%, 100%{transform:rotate(-3deg)}
+ 50%{transform:rotate(3deg)}
 }
 
 .songCard{
@@ -147,49 +130,66 @@ header p{
  min-height:0;
  touch-action:pan-y;
 
- margin:10px;
+ margin:0 12px 8px;
 
  background:var(--paper);
 
  color:var(--text);
 
- border-radius:28px;
+ border:4px solid #e7d6ff;
+ border-radius:32px 32px 26px 26px;
 
  overflow:auto;
 
- padding:24px;
+ padding:16px clamp(12px,3vw,28px) 20px;
 
- box-shadow:
- 0 10px 30px rgba(0,0,0,.35);
+ box-shadow:0 7px 0 #2e234b, 0 12px 24px #25194240;
+ scrollbar-color:#b5a0d4 var(--paper);
+}
 
- background-image:
- radial-gradient(
- rgba(255,184,90,.15) 1px,
- transparent 1px);
+.songHeading{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ margin-bottom:10px;
+}
 
- background-size:
- 12px 12px;
+.songBadge{
+ display:grid;
+ place-items:center;
+ flex-shrink:0;
+ width:44px;
+ height:44px;
+ border-radius:16px;
+ background:#ffe59b;
+ color:#735025;
+ font-size:1.9rem;
+ transform:rotate(-8deg);
 }
 
 .songTitle{
  text-align:center;
- color:#be6500;
- margin-bottom:14px;
-
- font-size:
- clamp(1.8rem,5vw,2.5rem);
+ color:#5c4086;
+ font-size:clamp(1.3rem,4.6vw,2rem);
+ line-height:1.2;
+ text-wrap:balance;
 }
 
 .verseCounter{
- text-align:center;
- margin-bottom:18px;
- color:#7b4e00;
- font-weight:600;
+ width:fit-content;
+ margin:0 auto 12px;
+ padding:5px 14px;
+ border-radius:30px;
+ background:#f0e5ff;
+ color:#614583;
+ font-size:.85rem;
+ font-weight:700;
 }
 
 .verse{
 
- min-height:40vh;
+ min-height:30vh;
 
  display:flex;
  align-items:center;
@@ -197,22 +197,17 @@ header p{
 
  text-align:center;
 
- background:
- linear-gradient(
- 135deg,
- rgba(255,255,255,.8),
- rgba(255,235,180,.7));
-
- border-radius:22px;
-
- padding:22px;
+ background:#fff1d2;
+ border:2px dashed #d9b879;
+ border-radius:24px;
+ padding:18px 10px;
 }
 
 .verseText{
 
  white-space:pre-line;
 
- line-height:1.7;
+ line-height:1.65;
 
  font-size:
  clamp(1.4rem,4vw,2rem);
@@ -224,54 +219,93 @@ header p{
  1fr auto 1fr;
 
  gap:8px;
-
- padding:10px;
+ padding:4px 12px 10px;
 }
 
 button{
-
- border:none;
-
- border-radius:16px;
-
- padding:clamp(8px,2vw,15px);
-
- font-size:clamp(.8rem,3vw,1rem);
-
+ min-width:48px;
+ min-height:48px;
+ border:2px solid #fff5;
+ border-radius:20px;
+ padding:8px;
+ font:inherit;
+ font-size:.9rem;
  font-weight:700;
-
- color:white;
-
- background:
- linear-gradient(
- 135deg,
- var(--orange),
- var(--red));
-
+ color:#40345d;
+ background:#ffe18b;
+ box-shadow:0 5px 0 #bb873f;
  cursor:pointer;
+ -webkit-tap-highlight-color:transparent;
+ transition:transform .15s, box-shadow .15s;
 }
+
 button:active{
- transform:scale(.98);
+ transform:translateY(4px);
+ box-shadow:0 1px 0 #bb873f;
+}
+
+button:focus-visible{
+ outline:3px solid white;
+ outline-offset:3px;
+}
+
+.nextButton{
+ background:#9ee3d0;
+ box-shadow:0 5px 0 #387e72;
+}
+
+.nextButton:active{
+ box-shadow:0 1px 0 #387e72;
+}
+
+.buttonArrow{
+ display:block;
+ font-size:1.9rem;
+ line-height:1;
+ margin-bottom:3px;
 }
 
 .centerButtons{
  display:flex;
- gap:8px;
+ gap:6px;
+ align-items:center;
  justify-content:center;
 }
 
+.centerButtons button{
+ background:#eee2ff;
+ box-shadow:0 5px 0 #8870ae;
+ font-size:1.1rem;
+}
+
+.centerButtons button:active{
+ box-shadow:0 1px 0 #8870ae;
+}
+
 .footerInfo{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:10px;
  text-align:center;
- padding:0 10px 12px;
- font-size:.95rem;
- opacity:.95;
+ padding:0 10px 3px;
+ font-size:.8rem;
+ font-weight:700;
+}
+
+.songProgress{
+ display:flex;
+ gap:5px;
+ color:#ffe18b;
+ font-size:1.4rem;
+ line-height:1.2;
 }
 
 .help{
  text-align:center;
- padding-bottom:10px;
- font-size:.85rem;
- opacity:.8;
+ padding:0 8px 8px;
+ font-size:.75rem;
+ color:#fff4d9;
 }
 
 header,
@@ -281,11 +315,20 @@ header,
  flex-shrink:0;
 }
 
+@media (max-height:500px){
+ header{padding-top:4px}
+ header p{font-size:1.3rem}
+ .nightFriends{height:44px}
+ .songCard{padding-top:10px}
+ .buttonArrow{display:inline; font-size:1.2rem; margin-right:4px}
+ .help{padding-bottom:4px}
+}
+
 @media (prefers-reduced-motion:reduce){
- .star,
- .lantern{
+ .lanternFriend{
   animation:none;
  }
+ button{transition:none}
 }
 
 </style>
@@ -298,13 +341,44 @@ header,
 <div class="app">
 
 <header>
-<h1>🏮 Kita Sonnenwinkel</h1>
-<p>Laternenumzug 2026</p>
+<h1>Kita Sonnenwinkel · Laternenumzug 2026</h1>
+<p>Komm, wir leuchten!</p>
+<svg class="nightFriends" viewBox="0 0 420 110" aria-hidden="true" focusable="false">
+ <path d="M10 12 Q210 75 410 12" fill="none" stroke="#dac4f4" stroke-width="3" stroke-linecap="round"/>
+ <g fill="#ffe59b">
+  <path d="m27 48 3 8 9 1-7 6 2 9-7-5-8 5 3-9-7-6 9-1z"/>
+  <path d="m283 64 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z"/>
+  <circle cx="185" cy="12" r="3"/>
+  <circle cx="253" cy="24" r="2"/>
+ </g>
+ <g>
+  <path d="M367 13 A34 34 0 1 0 399 60 A29 29 0 0 1 367 13" fill="#ffe59b" stroke="#fff1bc" stroke-width="2"/>
+  <path d="M353 48q4-6 8 0m-4 9q6 6 12 0" fill="none" stroke="#75543c" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="348" cy="57" r="4" fill="#f3b29b"/>
+ </g>
+ <g class="lanternFriend">
+  <path d="M87 31v13m-13 9v-6a13 10 0 0 1 26 0v6" fill="none" stroke="#f8dfaf" stroke-width="3"/>
+  <rect x="61" y="52" width="52" height="48" rx="15" fill="#ffc76d" stroke="#ffe8b1" stroke-width="3"/>
+  <path d="M74 56v40m26-40v40" stroke="#ec9a52" stroke-width="2"/>
+  <circle cx="81" cy="73" r="2.5" fill="#62405a"/><circle cx="95" cy="73" r="2.5" fill="#62405a"/>
+  <path d="M82 82q6 7 12 0" fill="none" stroke="#62405a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M77 101h20" stroke="#ffe8b1" stroke-width="4" stroke-linecap="round"/>
+ </g>
+ <g class="lanternFriend" style="animation-delay:-2s">
+  <path d="M210 44v12m-12 9v-5a12 9 0 0 1 24 0v5" fill="none" stroke="#f8dfaf" stroke-width="3"/>
+  <rect x="184" y="64" width="52" height="40" rx="14" fill="#f7aac5" stroke="#ffdae5" stroke-width="3"/>
+  <path d="M197 67v33m26-33v33" stroke="#dd82ab" stroke-width="2"/>
+  <path d="M199 81q3-5 6 0m10 0q3-5 6 0m-16 7q6 6 12 0" fill="none" stroke="#62405a" stroke-width="2.5" stroke-linecap="round"/>
+ </g>
+</svg>
 </header>
 
 <main class="songCard" aria-live="polite">
 
+<div class="songHeading">
+<span class="songBadge" aria-hidden="true">♫</span>
 <h2 class="songTitle" id="songTitle"></h2>
+</div>
 
 <div class="verseCounter" id="verseCounter"></div>
 
@@ -316,8 +390,8 @@ header,
 
 <div class="controls">
 
-<button type="button" onclick="previousVerse()">
-← Zurück
+<button type="button" onclick="previousVerse()" aria-label="Vorherige Strophe">
+<span class="buttonArrow" aria-hidden="true">←</span>Zurück
 </button>
 
 <div class="centerButtons">
@@ -332,16 +406,19 @@ A-
 
 </div>
 
-<button type="button" onclick="nextVerse()">
-Weiter →
+<button class="nextButton" type="button" onclick="nextVerse()" aria-label="Nächste Strophe">
+<span class="buttonArrow" aria-hidden="true">→</span>Weiter
 </button>
 
 </div>
 
-<div class="footerInfo" id="songInfo"></div>
+<div class="footerInfo">
+<div class="songProgress" id="songProgress" aria-hidden="true"></div>
+<span id="songInfo"></span>
+</div>
 
 <div class="help">
-Links/Rechts wischen oder Buttons verwenden
+Wischen oder tippen · Sing mit! ♫
 </div>
 
 </div>
@@ -455,6 +532,7 @@ const songTitle = document.getElementById("songTitle");
 const verseCounter = document.getElementById("verseCounter");
 const verseText = document.getElementById("verseText");
 const songInfo = document.getElementById("songInfo");
+const songProgress = document.getElementById("songProgress");
 
 function renderVerse(){
  const song = songs[songIndex];
@@ -462,6 +540,7 @@ function renderVerse(){
  verseCounter.textContent = `Strophe ${verseIndex + 1} von ${song.verses.length}`;
  verseText.textContent = song.verses[verseIndex];
  songInfo.textContent = `Lied ${songIndex + 1} von ${songs.length}`;
+ songProgress.textContent = songs.map((song, index) => index === songIndex ? "★" : "☆").join(" ");
  songCard.scrollTop = 0;
 }
 
