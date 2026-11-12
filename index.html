@@ -120,6 +120,8 @@ body{
  position:relative;
  z-index:2;
  height:100vh;
+ height:100dvh;
+ padding-bottom:env(safe-area-inset-bottom, 0px);
  display:flex;
  flex-direction:column;
 }
@@ -142,6 +144,8 @@ header p{
 .songCard{
 
  flex:1;
+ min-height:0;
+ touch-action:pan-y;
 
  margin:10px;
 
@@ -230,9 +234,9 @@ button{
 
  border-radius:16px;
 
- padding:15px;
+ padding:clamp(8px,2vw,15px);
 
- font-size:1rem;
+ font-size:clamp(.8rem,3vw,1rem);
 
  font-weight:700;
 
@@ -270,12 +274,26 @@ button:active{
  opacity:.8;
 }
 
+header,
+.controls,
+.footerInfo,
+.help{
+ flex-shrink:0;
+}
+
+@media (prefers-reduced-motion:reduce){
+ .star,
+ .lantern{
+  animation:none;
+ }
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="sky"></div>
+<div id="sky" aria-hidden="true"></div>
 
 <div class="app">
 
@@ -284,7 +302,7 @@ button:active{
 <p>Laternenumzug 2026</p>
 </header>
 
-<div class="songCard">
+<main class="songCard" aria-live="polite">
 
 <h2 class="songTitle" id="songTitle"></h2>
 
@@ -294,27 +312,27 @@ button:active{
 <div class="verseText" id="verseText"></div>
 </div>
 
-</div>
+</main>
 
 <div class="controls">
 
-<button onclick="previousVerse()">
+<button type="button" onclick="previousVerse()">
 ← Zurück
 </button>
 
 <div class="centerButtons">
 
-<button onclick="changeFont(2)">
+<button type="button" onclick="changeFont(2)" aria-label="Schrift vergrößern">
 A+
 </button>
 
-<button onclick="changeFont(-2)">
+<button type="button" onclick="changeFont(-2)" aria-label="Schrift verkleinern">
 A-
 </button>
 
 </div>
 
-<button onclick="nextVerse()">
+<button type="button" onclick="nextVerse()">
 Weiter →
 </button>
 
@@ -338,9 +356,9 @@ const songs = [
  verses:[
 
 `Durch die Straßen auf und nieder
-leuchten die Laternen wieder
+leuchten die Laternen wieder:
 rote, gelbe, grüne, blaue,
-lieber Martin komm und schaue!`,
+lieber Martin, komm und schaue!`,
 
 `Wie die Blumen in dem Garten,
 blühn Laternen aller Arten:
@@ -409,14 +427,104 @@ rabumm.`
 `Laterne, Laterne,
 Sonne, Mond und Sterne.
 
-Brenne auf mein Licht,
-brenne auf mein Licht,
+Brenne auf, mein Licht,
+brenne auf, mein Licht,
 
 aber nur meine liebe
 Laterne nicht.`,
 
 `Laterne, Laterne,
-Sonne, Mond...
+Sonne, Mond und Sterne.
+
+Sperrt ihn ein, den Wind,
+sperrt ihn ein, den Wind,
+
+er soll warten,
+bis wir alle zu Hause sind!`
+
+ ]
+}
+
+];
+
+let songIndex = 0;
+let verseIndex = 0;
+
+const songCard = document.querySelector(".songCard");
+const songTitle = document.getElementById("songTitle");
+const verseCounter = document.getElementById("verseCounter");
+const verseText = document.getElementById("verseText");
+const songInfo = document.getElementById("songInfo");
+
+function renderVerse(){
+ const song = songs[songIndex];
+ songTitle.textContent = song.title;
+ verseCounter.textContent = `Strophe ${verseIndex + 1} von ${song.verses.length}`;
+ verseText.textContent = song.verses[verseIndex];
+ songInfo.textContent = `Lied ${songIndex + 1} von ${songs.length}`;
+ songCard.scrollTop = 0;
+}
+
+function previousVerse(){
+ if(verseIndex > 0){
+  verseIndex--;
+ }else{
+  songIndex = (songIndex - 1 + songs.length) % songs.length;
+  verseIndex = songs[songIndex].verses.length - 1;
+ }
+ renderVerse();
+}
+
+function nextVerse(){
+ if(verseIndex < songs[songIndex].verses.length - 1){
+  verseIndex++;
+ }else{
+  songIndex = (songIndex + 1) % songs.length;
+  verseIndex = 0;
+ }
+ renderVerse();
+}
+
+function changeFont(delta){
+ const currentSize = parseFloat(getComputedStyle(verseText).fontSize);
+ const fontSize = Math.min(48, Math.max(18, currentSize + delta));
+ verseText.style.fontSize = `${fontSize}px`;
+}
+
+let touchStart = null;
+
+songCard.addEventListener("touchstart", event => {
+ if(event.touches.length !== 1){
+  touchStart = null;
+  return;
+ }
+ const touch = event.touches[0];
+ touchStart = {x:touch.clientX, y:touch.clientY};
+}, {passive:true});
+
+songCard.addEventListener("touchend", event => {
+ if(!touchStart){
+  return;
+ }
+ const touch = event.changedTouches[0];
+ const deltaX = touch.clientX - touchStart.x;
+ const deltaY = touch.clientY - touchStart.y;
+ touchStart = null;
+ if(Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY)){
+  return;
+ }
+ if(deltaX < 0){
+  nextVerse();
+ }else{
+  previousVerse();
+ }
+}, {passive:true});
+
+songCard.addEventListener("touchcancel", () => {
+ touchStart = null;
+}, {passive:true});
+
+renderVerse();
 
 </script>
 
