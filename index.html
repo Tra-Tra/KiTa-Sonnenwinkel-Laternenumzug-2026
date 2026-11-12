@@ -1,261 +1,342 @@
 <!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
+<title>Kita Sonnenwinkel | Laternenumzug 2026</title>
 
-
-
-
-Kita Sonnenwinkel - Laternenumzug
-
+<style>
 
 :root{
-    --bg1:#08152e;
-    --bg2:#142d5a;
-    --gold:#ffd76a;
-    --orange:#ff9d3f;
-    --red:#ff6b4d;
-    --paper:rgba(255,250,235,.92);
-    --text:#25304a;
+ --bg1:#08152e;
+ --bg2:#14305f;
+ --gold:#ffd76a;
+ --orange:#ff9d3f;
+ --red:#ff6d43;
+ --paper:rgba(255,248,230,.92);
+ --text:#263248;
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
 }
 
-html,body{
-    height:100%;
-    overflow:hidden;
-    font-family:
-    "Trebuchet MS",
-    "Segoe UI",
-    sans-serif;
+html,
+body{
+ width:100%;
+ height:100%;
+ font-family:
+ "Segoe UI",
+ Arial,
+ sans-serif;
+ overflow:hidden;
 }
 
 body{
-    background:
-        radial-gradient(circle at top,
-            #183a78 0%,
-            var(--bg2) 40%,
-            var(--bg1) 100%);
-    color:white;
+ background:
+ radial-gradient(
+  circle at top,
+  #234d8d 0%,
+  var(--bg2) 40%,
+  var(--bg1) 100%);
+ color:white;
 }
 
-/* Sterne */
+#sky{
+ position:fixed;
+ inset:0;
+ overflow:hidden;
+ pointer-events:none;
+ z-index:1;
+}
 
 .star{
-    position:absolute;
-    border-radius:50%;
-    background:white;
-    animation:twinkle 3s infinite alternate;
+ position:absolute;
+ width:3px;
+ height:3px;
+ background:white;
+ border-radius:50%;
+ animation:twinkle 3s infinite alternate;
 }
 
 @keyframes twinkle{
-    from{opacity:.25;}
-    to{opacity:1;}
+ from{opacity:.2}
+ to{opacity:1}
 }
-
-/* Laternen */
 
 .lantern{
-    position:absolute;
-    width:50px;
-    height:70px;
-    border-radius:8px;
-    background:
-      linear-gradient(
-      to bottom,
-      #ffeeb4,
-      #ffc94f,
-      #ff9c2f);
+ position:absolute;
+ width:44px;
+ height:60px;
+ border-radius:8px;
 
-    box-shadow:
-      0 0 20px #ffd84d,
-      0 0 40px #ffb400;
+ background:
+ linear-gradient(
+ to bottom,
+ #fff0ad,
+ #ffc44c,
+ #ff942b);
 
-    animation:
-      float 12s linear infinite;
+ box-shadow:
+ 0 0 20px #ffd84e,
+ 0 0 35px #ffb300;
+
+ animation:
+ lanternFloat linear infinite;
 }
 
-.lantern:before{
-    content:"";
-    position:absolute;
-    width:26px;
-    height:18px;
-    left:12px;
-    top:-12px;
-    border:3px solid #ddd;
-    border-bottom:none;
-    border-radius:12px 12px 0 0;
+.lantern::before{
+ content:"";
+ position:absolute;
+ width:20px;
+ height:12px;
+ left:10px;
+ top:-10px;
+
+ border:3px solid #ddd;
+ border-bottom:none;
+ border-radius:10px 10px 0 0;
 }
 
-@keyframes float{
-    from{
-        transform:translateY(110vh);
-    }
-    to{
-        transform:translateY(-120px);
-    }
+@keyframes lanternFloat{
+
+ from{
+  transform:
+   translateY(110vh)
+   rotate(-3deg);
+ }
+
+ to{
+  transform:
+   translateY(-150px)
+   rotate(3deg);
+ }
 }
 
-/* Hauptbereich */
-
-.container{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    position:relative;
-    z-index:2;
+.app{
+ position:relative;
+ z-index:2;
+ height:100vh;
+ display:flex;
+ flex-direction:column;
 }
 
-.header{
-    text-align:center;
-    padding:20px 15px 8px;
+header{
+ text-align:center;
+ padding:18px 10px 10px;
 }
 
-.header h1{
-    font-size:clamp(1.5rem,5vw,2.4rem);
+header h1{
+ font-size:
+ clamp(1.5rem,5vw,2.2rem);
 }
 
-.header p{
-    opacity:.9;
-    margin-top:6px;
+header p{
+ opacity:.9;
+ margin-top:4px;
 }
 
-/* Liedkarte */
+.songCard{
 
-.song-card{
-    flex:1;
-    margin:12px;
-    padding:22px;
-    overflow:auto;
+ flex:1;
 
-    background:var(--paper);
+ margin:10px;
 
-    color:var(--text);
+ background:var(--paper);
 
-    border-radius:28px;
+ color:var(--text);
 
-    backdrop-filter:blur(10px);
+ border-radius:28px;
 
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.35);
+ overflow:auto;
 
-    background-image:
-      radial-gradient(
-      rgba(255,190,120,.25) 1px,
-      transparent 1px);
+ padding:24px;
 
-    background-size:12px 12px;
+ box-shadow:
+ 0 10px 30px rgba(0,0,0,.35);
+
+ background-image:
+ radial-gradient(
+ rgba(255,184,90,.15) 1px,
+ transparent 1px);
+
+ background-size:
+ 12px 12px;
 }
 
-.song-title{
-    text-align:center;
-    color:#c15f00;
-    margin-bottom:20px;
-    font-size:clamp(1.5rem,6vw,2.4rem);
+.songTitle{
+ text-align:center;
+ color:#be6500;
+ margin-bottom:14px;
+
+ font-size:
+ clamp(1.8rem,5vw,2.5rem);
 }
 
-.strophe{
-    margin-bottom:28px;
-    padding:18px;
-
-    border-radius:18px;
-
-    background:
-      linear-gradient(
-      135deg,
-      rgba(255,255,255,.65),
-      rgba(255,240,200,.8));
+.verseCounter{
+ text-align:center;
+ margin-bottom:18px;
+ color:#7b4e00;
+ font-weight:600;
 }
 
-.strophe h3{
-    margin-bottom:12px;
-    color:#8a4600;
+.verse{
+
+ min-height:40vh;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+ text-align:center;
+
+ background:
+ linear-gradient(
+ 135deg,
+ rgba(255,255,255,.8),
+ rgba(255,235,180,.7));
+
+ border-radius:22px;
+
+ padding:22px;
 }
 
-.strophe p{
-    line-height:1.8;
-    font-size:clamp(1.2rem,4.5vw,1.6rem);
+.verseText{
+
+ white-space:pre-line;
+
+ line-height:1.7;
+
+ font-size:
+ clamp(1.4rem,4vw,2rem);
 }
 
-/* Navigation */
+.controls{
+ display:grid;
+ grid-template-columns:
+ 1fr auto 1fr;
 
-.nav{
-    display:flex;
-    justify-content:space-between;
-    padding:12px;
+ gap:8px;
+
+ padding:10px;
 }
 
 button{
-    border:none;
-    padding:14px 20px;
-    border-radius:18px;
-    font-size:1rem;
-    font-weight:bold;
-    cursor:pointer;
 
-    background:
-      linear-gradient(
-      135deg,
-      var(--orange),
-      var(--red));
+ border:none;
 
-    color:white;
+ border-radius:16px;
 
-    box-shadow:
-      0 5px 15px rgba(0,0,0,.3);
+ padding:15px;
+
+ font-size:1rem;
+
+ font-weight:700;
+
+ color:white;
+
+ background:
+ linear-gradient(
+ 135deg,
+ var(--orange),
+ var(--red));
+
+ cursor:pointer;
+}
+button:active{
+ transform:scale(.98);
 }
 
-.indicator{
-    text-align:center;
-    padding-bottom:14px;
-    font-size:.95rem;
+.centerButtons{
+ display:flex;
+ gap:8px;
+ justify-content:center;
 }
 
-/* Scrollbar */
-
-.song-card::-webkit-scrollbar{
-    width:6px;
+.footerInfo{
+ text-align:center;
+ padding:0 10px 12px;
+ font-size:.95rem;
+ opacity:.95;
 }
 
-.song-card::-webkit-scrollbar-thumb{
-    background:#d6a34c;
-    border-radius:10px;
+.help{
+ text-align:center;
+ padding-bottom:10px;
+ font-size:.85rem;
+ opacity:.8;
 }
 
+</style>
+</head>
 
+<body>
 
+<div id="sky"></div>
 
+<div class="app">
 
+<header>
+<h1>🏮 Kita Sonnenwinkel</h1>
+<p>Laternenumzug 2026</p>
+</header>
 
+<div class="songCard">
 
+<h2 class="songTitle" id="songTitle"></h2>
 
+<div class="verseCounter" id="verseCounter"></div>
 
+<div class="verse">
+<div class="verseText" id="verseText"></div>
+</div>
 
+</div>
 
-    🏮 Kita Sonnenwinkel
-    Laternenumzug
+<div class="controls">
 
+<button onclick="previousVerse()">
+← Zurück
+</button>
 
+<div class="centerButtons">
 
+<button onclick="changeFont(2)">
+A+
+</button>
 
+<button onclick="changeFont(-2)">
+A-
+</button>
 
-    ← Zurück
-    Weiter →
+</div>
 
+<button onclick="nextVerse()">
+Weiter →
+</button>
 
+</div>
 
+<div class="footerInfo" id="songInfo"></div>
 
+<div class="help">
+Links/Rechts wischen oder Buttons verwenden
+</div>
 
+</div>
 
-
+<script>
 
 const songs = [
 
 {
-title:"Durch die Straßen auf und nieder",
-verses:[
+ title:"Durch die Straßen auf und nieder",
+
+ verses:[
+
 `Durch die Straßen auf und nieder
 leuchten die Laternen wieder
 rote, gelbe, grüne, blaue,
@@ -270,42 +351,61 @@ lieber Martin, komm und schaue!`,
 mit Laternen an den Stecken:
 rote, gelbe, grüne, blaue,
 lieber Martin, komm und schaue!`
-]
+
+ ]
 },
 
 {
-title:"Ich geh mit meiner Laterne",
-verses:[
+ title:"Ich geh mit meiner Laterne",
+
+ verses:[
+
 `Ich geh mit meiner Laterne
 und meine Laterne mit mir.
+
 Da oben leuchten die Sterne,
 hier unten leuchten wir.
 
-St. Martin hier, wir leuchten dir,
-rabimmel, rabammel, rabumm.`,
+St. Martin hier,
+wir leuchten dir,
 
+rabimmel,
+rabammel,
+rabumm.`,
 `Ich geh mit meiner Laterne
 und meine Laterne mit mir.
+
 Da oben leuchten die Sterne,
 hier unten leuchten wir.
 
-Ein Lichtermeer zu Martins Ehr,
-rabimmel, rabammel, rabumm.`,
+Ein Lichtermeer
+zu Martins Ehr,
+
+rabimmel,
+rabammel,
+rabumm.`,
 
 `Ich geh mit meiner Laterne
 und meine Laterne mit mir.
+
 Da oben leuchten die Sterne,
 hier unten leuchten wir.
 
 Mein Licht ist schön,
 könnt ihr es sehn,
-rabimmel, rabammel, rabumm.`
-]
+
+rabimmel,
+rabammel,
+rabumm.`
+
+ ]
 },
 
 {
-title:"Laterne, Laterne",
-verses:[
+ title:"Laterne, Laterne",
+
+ verses:[
+
 `Laterne, Laterne,
 Sonne, Mond und Sterne.
 
@@ -317,3 +417,8 @@ Laterne nicht.`,
 
 `Laterne, Laterne,
 Sonne, Mond...
+
+</script>
+
+</body>
+</html>
